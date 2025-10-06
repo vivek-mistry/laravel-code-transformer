@@ -30,12 +30,6 @@ php artisan make:transform-code
     <li>Fully local — no external package required.</li>
 </ul>
 
-
-## Testing
-```php
-composer test
-```
-
 ## Credits
 
 - [Vivek Mistry](https://github.com/vivek-mistry) - Project creator and maintainer
