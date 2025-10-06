@@ -3,6 +3,7 @@
     "description": "Modifies your existing controller code for any model with one command.",
     "keywords": [
         "code-transformer", "laravel-code-transformer",
+        "code-transform", "laravel-code-transform",        
         "php", "laravel", "copy-controller"
     ],
     "homepage": "https://github.com/vivek-mistry/laravel-code-transformenr",
