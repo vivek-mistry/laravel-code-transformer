@@ -1,6 +1,6 @@
 <?php
 
-namespace VivekMistry\LaravelCodeTransformer\app\Http\Controllers\Backend;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,11 +8,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use App\Models\Brand;
-use App\DataTables\BrandDataTable;
-use App\Http\Requests\Backend\BrandStoreRequest;
+use App\Models\Basic;
+use App\DataTables\BasicDataTable;
+use App\Http\Requests\Backend\BasicStoreRequest;
 use App\Facades\FileUpload;
-use App\Http\Requests\Backend\BrandUpdateRequest;
+use App\Http\Requests\Backend\BasicUpdateRequest;
 use Exception;
 
 class BasicController extends Controller
@@ -24,45 +24,45 @@ class BasicController extends Controller
      */
     public function index() : View
     {
-        return view('backend.brand.index');
+        return view('backend.basic.index');
     }
 
     /**
      * Category Ajax
      *
-     * @param BrandDataTable $brandDataTable
+     * @param BasicDataTable $basicDataTable
      * @return JsonResponse
      */
-    public function ajax(BrandDataTable $brandDataTable): JsonResponse
+    public function ajax(BasicDataTable $basicDataTable): JsonResponse
     {
-        return $brandDataTable->ajax();
+        return $basicDataTable->ajax();
     }
 
     /**
      * Category store request
      *
-     * @param BrandStoreRequest $request
+     * @param BasicStoreRequest $request
      * @return JsonResponse
      */
-    public function store(BrandStoreRequest $request) : JsonResponse
+    public function store(BasicStoreRequest $request) : JsonResponse
     {
         try{
-            $entity = app(Brand::class);
+            $entity = app(Basic::class);
             $this->storeOrUpdate($entity, $request);
-            return Response::success('Brand created successfully');
+            return Response::success('Basic created successfully');
         }catch(Exception $ex){
             return Response::error('Something went wrong.', 500);
         }
     }
 
     /**
-     * Store or update brand
+     * Store or update basic
      *
      * @param $entity
      * @param Request $request
-     * @return Brand
+     * @return Basic
      */
-    public function storeOrUpdate($entity, Request $request) : Brand
+    public function storeOrUpdate($entity, Request $request) : Basic
     {
         $original = $entity->replicate();
 
@@ -73,7 +73,7 @@ class BasicController extends Controller
             $entity->image = null;
         }
         if($request->hasFile('image')){
-            $entity->image = FileUpload::upload(Brand::FOLDER_NAME, $request->file('image'));
+            $entity->image = FileUpload::upload(Basic::FOLDER_NAME, $request->file('image'));
         }
 
         if (!$entity->isDirty()) {
@@ -84,23 +84,23 @@ class BasicController extends Controller
         return $entity;
     }
 
-    public function edit(Brand $brand) : JsonResponse
+    public function edit(Basic $brand) : JsonResponse
     {
         return Response::success('Fetched!',$brand);
     }
 
     /**
-     * Update brand
+     * Update Basic
      *
-     * @param Brand $brand
+     * @param Basic $basic
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(Brand $brand, BrandUpdateRequest $request) : JsonResponse
+    public function update(Basic $basic, BasicUpdateRequest $request) : JsonResponse
     {
         try{
-            $this->storeOrUpdate($brand, $request);
-            return Response::success('Brand updated successfully');
+            $this->storeOrUpdate($basic, $request);
+            return Response::success('Basic updated successfully');
         }catch (HttpException $ex) {
             if ($ex->getStatusCode() === 422) {
                 return Response::error($ex->getMessage(), 422); // Or use a different method if you have it
@@ -112,24 +112,24 @@ class BasicController extends Controller
     }
 
     /**
-     * Active Inactive brand
+     * Active Inactive basic
      *
-     * @param Brand $brand
+     * @param Basic $basic
      * @return JsonResponse
      */
-    public function activeInactive(Brand $brand) : JsonResponse
+    public function activeInactive(Basic $basic) : JsonResponse
     {
         try{
-            if($brand->status == 1){
-                $brand->update([
+            if($basic->status == 1){
+                $basic->update([
                     'status' => 0
                 ]);
-                $message = "Successfuly, deactive the ".$brand->name;
+                $message = "Successfuly, deactive the ".$basic->name;
             }else{
-                $brand->update([
+                $basic->update([
                     'status' => 1
                 ]);
-                $message = "Successfuly, active the ".$brand->name;
+                $message = "Successfuly, active the ".$basic->name;
             }
             return Response::success($message);
         }catch(Exception $ex){
@@ -138,19 +138,19 @@ class BasicController extends Controller
     }
 
     /**
-     * Delete brand
+     * Delete basic
      *
-     * @param Brand $brand
+     * @param Basic $basic
      * @return JsonResponse
      */
-    public function destroy(Brand $brand) : JsonResponse
+    public function destroy(Basic $basic) : JsonResponse
     {
         try{
-            if($brand->image){
-                FileUpload::removeFile($brand->image_url);
+            if($basic->image){
+                FileUpload::removeFile($basic->image_url);
             }
-            $brand->delete();
-            return Response::success('Brand deleted successfully');
+            $basic->delete();
+            return Response::success('Basic deleted successfully');
         }catch(Exception $ex){
             return Response::error('Something went wrong.', 500);
         }

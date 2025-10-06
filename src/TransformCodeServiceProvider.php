@@ -3,7 +3,7 @@
 namespace VivekMistry\LaravelCodeTransformer;
 
 use Illuminate\Support\ServiceProvider;
-use VivekMistry\LaravelCodeTransformer\Commands\TransformCodeVisual;
+use VivekMistry\LaravelCodeTransformer\Commands\TransformCode;
 
 class TransformCodeServiceProvider extends ServiceProvider
 {
@@ -11,7 +11,7 @@ class TransformCodeServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                TransformCodeVisual::class,
+                TransformCode::class,
             ]);
             
             // $this->publishes([
