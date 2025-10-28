@@ -13,7 +13,7 @@ composer require vivek-mistry/laravel-code-transformer
 
 ## Execute via
 ```bash
-php artisan make:transform-code
+php artisan transform:code
 ```
 
 | Option    | Description                                               |   Default     |
