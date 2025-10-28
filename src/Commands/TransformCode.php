@@ -41,7 +41,7 @@ class TransformCode extends Command
 
         if($from == 'Basic')
         {
-            $fromController = __DIR__.'/../../app/Http/Controllers/BasicController.php';
+            $fromController = __DIR__.'/../app/Http/BasicController.php';
         }else{
             $fromController = app_path("Http/Controllers/{$from}Controller.php");
         }
@@ -50,7 +50,7 @@ class TransformCode extends Command
         if (!$fs->exists($fromController)) {
             $this->warn("⚠️ Controller not found at {$fromController}");
             if ($this->confirm("Do you want to use default 'BasicController'?", true)) {
-                $fromController = __DIR__.'/../../app/Http/Controllers/BasicController.php';
+                $fromController = __DIR__.'/../app/Http/BasicController.php';
             } else {
                 $this->error('❌ Operation cancelled.');
                 return Command::FAILURE;
