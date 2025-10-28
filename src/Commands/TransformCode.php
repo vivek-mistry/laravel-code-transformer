@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace VivekMistry\LaravelCodeTransformer\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
